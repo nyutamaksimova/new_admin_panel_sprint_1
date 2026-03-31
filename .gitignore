@@ -1,3 +1,5 @@
 .venv/
 .idea/
 movies_admin/config/.env
+
+sqlite_to_postgres/.env
