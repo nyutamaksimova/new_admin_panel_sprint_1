@@ -28,7 +28,7 @@ class Genre(UUIDMixin, TimeStampedMixin):
         return self.name
 
     class Meta:
-        db_table = 'content\'.\'genre'
+        db_table = "content\".\"genre"
         verbose_name = _('genre')
         verbose_name_plural = _('genres')
 
@@ -40,7 +40,7 @@ class Person(UUIDMixin, TimeStampedMixin):
         return self.full_name
 
     class Meta:
-        db_table = 'content\'.\'person'
+        db_table = "content\".\"person"
         verbose_name = _('person')
         verbose_name_plural = _('people')
 
@@ -73,7 +73,7 @@ class FilmWork(UUIDMixin, TimeStampedMixin):
         return self.title
 
     class Meta:
-        db_table = 'content\'.\'film_work'
+        db_table = "content\".\"film_work"
         verbose_name = _('film_work')
         verbose_name_plural = _('film_works')
 
@@ -95,7 +95,7 @@ class GenreFilmWork(UUIDMixin):
     created = models.DateTimeField(_('created'), auto_now_add=True)
 
     class Meta:
-        db_table = 'content\'.\'genre_film_work'
+        db_table = "content\".\"genre_film_work"
 
         constraints = [
             models.UniqueConstraint(
@@ -117,11 +117,11 @@ class PersonFilmWork(UUIDMixin):
     created = models.DateTimeField(_('created'), auto_now_add=True)
 
     class Meta:
-        db_table = 'content\'.\'person_film_work'
+        db_table = "content\".\"person_film_work"
 
         constraints = [
             models.UniqueConstraint(
-                fields=['film_work', 'person'],
-                name='film_work_person_idx'
+                fields=['film_work', 'person', 'role'],
+                name='film_work_person_role_idx'
             )
         ]
