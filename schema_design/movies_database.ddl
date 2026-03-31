@@ -49,5 +49,5 @@ CREATE UNIQUE INDEX film_work_genre_idx ON content.genre_film_work(film_work_id,
 
 CREATE INDEX person_full_name_idx ON content.person(full_name);
 
-CREATE UNIQUE INDEX film_work_person_idx ON content.person_film_work(film_work_id, person_id);
+CREATE UNIQUE INDEX film_work_person_role_idx ON content.person_film_work(film_work_id, person_id, role);
 
