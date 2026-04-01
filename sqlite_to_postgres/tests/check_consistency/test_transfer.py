@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 from psycopg import ClientCursor
 from psycopg.rows import dict_row
 
-from sqlite_to_postgres.load_data import FilmWork, Person, Genre, PersonFilmWork, GenreFilmWork
+from sqlite_to_postgres.models import FilmWork, Person, Genre, PersonFilmWork, GenreFilmWork
 
 BATCH_SIZE = 500
 MODELS = {'film_work': FilmWork,

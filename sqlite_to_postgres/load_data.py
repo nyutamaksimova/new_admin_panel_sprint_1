@@ -1,94 +1,16 @@
 import os
 import sqlite3
 from contextlib import closing
-from dataclasses import dataclass, fields, astuple
-from datetime import date, datetime
+from dataclasses import fields, astuple
+from datetime import datetime
 from typing import Generator
-from uuid import UUID
 
 import psycopg
 from dotenv import load_dotenv
 from psycopg import ClientCursor, connection as _connection
 from psycopg.rows import dict_row
 
-
-@dataclass
-class FilmWork:
-    id: UUID
-    title: str
-    description: str
-    creation_date: date
-    rating: float
-    type: str
-    created: datetime
-    modified: datetime
-
-    def __post_init__(self):
-        if isinstance(self.id, str):
-            self.id = UUID(self.id)
-
-
-@dataclass
-class Person:
-    id: UUID
-    full_name: str
-    created: datetime
-    modified: datetime
-
-    def __post_init__(self):
-        if isinstance(self.id, str):
-            self.id = UUID(self.id)
-
-
-@dataclass
-class Genre:
-    id: UUID
-    name: str
-    description: str
-    created: datetime
-    modified: datetime
-
-    def __post_init__(self):
-        if isinstance(self.id, str):
-            self.id = UUID(self.id)
-
-
-@dataclass
-class GenreFilmWork:
-    id: UUID
-    genre_id: UUID
-    film_work_id: UUID
-    created: datetime
-
-    def __post_init__(self):
-        if isinstance(self.id, str):
-            self.id = UUID(self.id)
-
-        if isinstance(self.genre_id, str):
-            self.genre_id = UUID(self.genre_id)
-
-        if isinstance(self.film_work_id, str):
-            self.film_work_id = UUID(self.film_work_id)
-
-
-@dataclass
-class PersonFilmWork:
-    id: UUID
-    person_id: UUID
-    film_work_id: UUID
-    role: str
-    created: datetime
-
-    def __post_init__(self):
-        if isinstance(self.id, str):
-            self.id = UUID(self.id)
-
-        if isinstance(self.person_id, str):
-            self.person_id = UUID(self.person_id)
-
-        if isinstance(self.film_work_id, str):
-            self.film_work_id = UUID(self.film_work_id)
-
+from sqlite_to_postgres.models import FilmWork, Person, PersonFilmWork, Genre, GenreFilmWork
 
 BATCH_SIZE = 500
 TABLES = ('film_work', 'person', 'genre', 'person_film_work', 'genre_film_work',)
@@ -163,6 +85,7 @@ def batch_generator(data, batch_size=BATCH_SIZE):
 
 class PostgresSaver:
     """Загрузчик данных в таблицы Postgres"""
+
     def __init__(self, pg_conn: _connection):
         self.pg_conn = pg_conn
 
